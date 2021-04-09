@@ -14,3 +14,8 @@ $ pkger list
 ```sh
 $ pkger -o ./cmd/app
 ```
+
+## Deploy Binário
+```sh
+$ PORT=8080 GIN_MODE=release ./bin/main-linux-amd64
+```
