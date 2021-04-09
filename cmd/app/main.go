@@ -3,9 +3,10 @@ package main
 import (
 	apiv1 "app/internal/api/v1"
 	"app/internal/person"
+	"net/http"
 
-	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/markbates/pkger"
 )
 
 func main() {
@@ -25,7 +26,16 @@ func main() {
 		v1.GET("/ping", othContr.HandlePing)
 	}
 
-	r.Use(static.Serve("/", static.LocalFile("../web", true)))
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusPermanentRedirect, "/web")
+	})
+
+	// r.Static("/web", "../web")
+	// r.StaticFS("/web", gin.Dir("../", false))
+	r.StaticFS("/web", pkger.Dir("/web"))
+
+	// "github.com/gin-contrib/static"
+	// r.Use(static.Serve("/", static.LocalFile("../web", true)))
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
