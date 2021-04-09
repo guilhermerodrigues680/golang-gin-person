@@ -3,13 +3,16 @@ package main
 import (
 	apiv1 "app/internal/api/v1"
 	"app/internal/person"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/pkger"
 )
 
 func main() {
+	start := time.Now()
 	r := gin.Default()
 
 	pRepo := person.NewPersonRepository()
@@ -37,5 +40,6 @@ func main() {
 	// "github.com/gin-contrib/static"
 	// r.Use(static.Serve("/", static.LocalFile("../web", true)))
 
+	fmt.Printf("started in %v\n", time.Since(start))
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
